@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "express": "^4.18.2",
+    "mediasoup": "^3.11.10",
+    "socket.io": "^4.6.1"
+  },
+  "name": "nodejsmediasoup",
+  "version": "1.0.0",
+  "description": "a mediasoup server in mern stack with live streaming with multiple guests.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mediasoup",
+    "streaming",
+    "liveStreaming"
+  ],
+  "author": "spaceCowboy",
+  "license": "ISC"
+}
