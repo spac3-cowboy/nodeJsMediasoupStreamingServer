@@ -57,12 +57,14 @@ app.post('/mediasoup', async (req, res) => {
 
 	// Handle the different mediasoup methods
   
-  /* switch (req.body.method) {
+switch (req.body.method) {
+
     case 'queryRouterRtpCapabilities':
       // Return the router's RTP capabilities
       const rtpCapabilities = router.rtpCapabilities;
       res.send(rtpCapabilities);
       break;
+
     case 'createWebRtcTransport':
       // Create a WebRTC transport
       webRtcTransport = await router.createWebRtcTransport({
@@ -75,36 +77,60 @@ app.post('/mediasoup', async (req, res) => {
         preferUdp: true,
         initialAvailableOutgoingBitrate: 1000000
       });
+
+	  // Return the transport parameters
+		const {
+			id,
+			iceParameters,
+			iceCandidates,
+			dtlsParameters
+		} = webRtcTransport;
+		res.send({
+			id,
+			iceParameters,
+			iceCandidates,
+			dtlsParameters
+		});
+		break;
+
     case 'connectTransport':
-      // Connect the WebRTC transport
-      await webRtcTransport.connect({
-        dtlsParameters: req.body.data.dtlsParameters
-      });
-      res.send({
-        connected: true
-      });
-      break;
-      case 'produce':
+        // Connect the WebRTC transport
+  if (!webRtcTransport) {
+    res.status(500).send('WebRTC transport not initialized');
+	initwebRtcTransport();
+	return;
+  }
+  try {
+    await webRtcTransport.connect({ dtlsParameters: req.body.data.dtlsParameters });
+    res.send({ connected: true });
+	console.log('connected');
+  } catch (error) {
+    console.error(error);
+    res.status(500).send(error.message);
+  }
+
+    case 'produce':
       // Produce a mediasoup stream
-      const {
-        kind,
-        rtpParameters
-      } = req.body.data;
-      const producer = await webRtcTransport.produce({
-        kind,
-        rtpParameters
-      });
-      res.send({
-        id: producer.id
-      });
+		const {
+			kind,
+			rtpParameters
+		} = req.body.data;
+		const producer = await webRtcTransport.produce({
+			kind,
+			rtpParameters
+		});
+		res.send({
+			id: producer.id
+		});
       break;
+
     default:
       // If the requested method is not found, return a 404 error
       res.status(404).send('Not found');
       break;
-  } */
+  } 
   
-	if (req.body.method === 'queryRouterRtpCapabilities') {
+	/*if (req.body.method === 'queryRouterRtpCapabilities') {
 		// Return the router's RTP capabilities
 		const rtpCapabilities = router.rtpCapabilities;
 		res.send(rtpCapabilities);
@@ -162,6 +188,6 @@ app.post('/mediasoup', async (req, res) => {
 	} else {
 		// If the requested method is not found, return a 404 error
 		res.status(404).send('Not found');
-	}
+	}*/
 
 });
