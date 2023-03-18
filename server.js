@@ -128,66 +128,6 @@ switch (req.body.method) {
       // If the requested method is not found, return a 404 error
       res.status(404).send('Not found');
       break;
-  } 
-  
-	/*if (req.body.method === 'queryRouterRtpCapabilities') {
-		// Return the router's RTP capabilities
-		const rtpCapabilities = router.rtpCapabilities;
-		res.send(rtpCapabilities);
-	} else 
-  if (req.body.method === 'createWebRtcTransport') {
-		// Create a WebRTC transport
-		webRtcTransport = await router.createWebRtcTransport({
-			listenIps: [{
-				ip: '0.0.0.0',
-				announcedIp: null
-			}],
-			enableUdp: true,
-			enableTcp: true,
-			preferUdp: true,
-			initialAvailableOutgoingBitrate: 1000000
-		});
-
-
-		// Return the transport parameters
-		const {
-			id,
-			iceParameters,
-			iceCandidates,
-			dtlsParameters
-		} = webRtcTransport;
-		res.send({
-			id,
-			iceParameters,
-			iceCandidates,
-			dtlsParameters
-		});
-	} else 
-  if (req.body.method === 'connectTransport') {
-		// Connect the WebRTC transport
-		await webRtcTransport.connect({
-			dtlsParameters: req.body.data.dtlsParameters
-		});
-		res.send({
-			connected: true
-		});
-	} else 
-  if (req.body.method === 'produce') {
-		// Produce a mediasoup stream
-		const {
-			kind,
-			rtpParameters
-		} = req.body.data;
-		const producer = await webRtcTransport.produce({
-			kind,
-			rtpParameters
-		});
-		res.send({
-			id: producer.id
-		});
-	} else {
-		// If the requested method is not found, return a 404 error
-		res.status(404).send('Not found');
-	}*/
+  }
 
 });
